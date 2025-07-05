@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Laptop",
+        "price": "1000",
+        "description": "A high-performance laptop.",
+        "category": "Electronics",
+        "seller_id": { "$oid": "67a21de0c2183d11918447dc" } 
+    },
+    {
+        "name": "Smartphone",
+        "price": "500",
+        "description": "A latest model smartphone.",
+        "category": "Electronics",
+        "seller_id": { "$oid": "67a21de0c2183d11918447dd" } 
+    },
+    {
+        "name": "Headphones",
+        "price": "100",
+        "description": "Noise-cancelling headphones.",
+        "category": "Accessories",
+        "seller_id": { "$oid": "67a21de0c2183d11918447de" } 
+    },
+    {
+        "name": "Office Chair",
+        "price": "150",
+        "description": "Ergonomic office chair.",
+        "category": "Furniture",
+        "seller_id": { "$oid": "67a21de0c2183d11918447df" } 
+    },
+    {
+        "name": "Coffee Maker",
+        "price": "80",
+        "description": "Automatic coffee maker.",
+        "category": "Appliances",
+        "seller_id": { "$oid": "67a21de0c2183d11918447e0" } 
+    }
+]

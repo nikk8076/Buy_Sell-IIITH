@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.signup-input {
+    @apply text-black border-[1px] mb-5 border-Blue h-10 w-[200px] text-[15px] py-2 px-2 outline-none cursor-default;
+}
+
+.signup-input-wide {
+    @apply text-black border-[1px] mb-5 border-Blue h-10 w-[410px] text-[15px] py-2 px-2 outline-none cursor-default;
+}
+
+body {
+    font-family: monospace;
+    @apply flex flex-col items-center min-h-screen;
+}
+
+.navbar {
+    @apply w-full fixed top-0 left-0 bg-Blue text-white p-2 flex justify-between items-center text-[15px];
+}
+
+.nav-items {
+    @apply flex gap-10;
+}
+
+.nav-link {
+    @apply text-Gray hover:text-white;
+}
+
+.logout-button {
+    @apply bg-Red p-1 px-2 text-center text-Gray rounded-lg hover:text-white;
+}
