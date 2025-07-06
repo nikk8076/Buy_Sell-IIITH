@@ -3,6 +3,7 @@ const test = (req, res) => {
 };
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const axios = require("axios");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const User = require("../models/user");
 const Item = require("../models/item");
@@ -10,8 +11,9 @@ const Orders = require("../models/order");
 const { default: mongoose } = require("mongoose");
 const registerUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, age, contactNumber } =
+    const { firstName, lastName, email, password, age, contactNumber, recaptchaToken } =
       req.body;
+    
     if (
       !firstName ||
       !lastName ||
@@ -22,6 +24,33 @@ const registerUser = async (req, res) => {
     ) {
       return res.json({ error: "All fields are required" });
     }
+
+    // Verify reCAPTCHA
+    if (!recaptchaToken) {
+      return res.json({ error: "Please complete the reCAPTCHA verification" });
+    }
+
+    try {
+      const recaptchaResponse = await axios.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        null,
+        {
+          params: {
+            secret: process.env.RECAPTCHA_SECRET_KEY,
+            response: recaptchaToken,
+          },
+        }
+      );
+
+      if (!recaptchaResponse.data.success) {
+        console.error('reCAPTCHA verification failed:', recaptchaResponse.data);
+        return res.json({ error: 'reCAPTCHA verification failed. Please try again.' });
+      }
+    } catch (recaptchaError) {
+      console.error('reCAPTCHA verification error:', recaptchaError);
+      return res.json({ error: 'reCAPTCHA verification failed. Please try again.' });
+    }
+
     console.log(req.body);
     //iiith email verification
     const pattern =
@@ -49,9 +78,35 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, recaptchaToken } = req.body;
     if (!email || !password) {
       return res.json({ error: "All fields are required" });
+    }
+
+    // Verify reCAPTCHA
+    if (!recaptchaToken) {
+      return res.json({ error: "Please complete the reCAPTCHA verification" });
+    }
+
+    try {
+      const recaptchaResponse = await axios.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        null,
+        {
+          params: {
+            secret: process.env.RECAPTCHA_SECRET_KEY,
+            response: recaptchaToken,
+          },
+        }
+      );
+
+      if (!recaptchaResponse.data.success) {
+        console.error('reCAPTCHA verification failed:', recaptchaResponse.data);
+        return res.json({ error: 'reCAPTCHA verification failed. Please try again.' });
+      }
+    } catch (recaptchaError) {
+      console.error('reCAPTCHA verification error:', recaptchaError);
+      return res.json({ error: 'reCAPTCHA verification failed. Please try again.' });
     }
     const user = await User.findOne({ email });
     if (!user) {

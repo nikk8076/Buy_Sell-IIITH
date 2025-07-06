@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { myContext } from '../../context/myContext'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
 const SignUp = () => {
   const [signupDetails, setSignupDetails] = React.useState({
     firstName: '',
@@ -14,8 +14,10 @@ const SignUp = () => {
     age: '',
     contactNumber: '',
   });
+  const [recaptchaValue, setRecaptchaValue] = React.useState(null);
   const { user, loading } = useContext(myContext);
   const navigate = useNavigate();
+  const recaptchaRef = useRef(null);
   useEffect(() => {
       if (!loading && user) {
           navigate('/dashboard');
@@ -23,14 +25,25 @@ const SignUp = () => {
   }, [user, loading, navigate]);
   const handleSignUp = async (e) => {
     e.preventDefault();
+    
+    if (!recaptchaValue) {
+      toast.error('Please complete the reCAPTCHA verification');
+      return;
+    }
+    
     const {firstName, lastName, email, password, age, contactNumber} = signupDetails; 
     try {
       const response = await axios.post('/signup',{
-        firstName, lastName, email, password, age, contactNumber
+        firstName, lastName, email, password, age, contactNumber, recaptchaToken: recaptchaValue
       });
       if(response.data.error)
       {
         toast.error(response.data.error);
+        // Reset reCAPTCHA on error
+        setRecaptchaValue(null);
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
       }
       else
       {
@@ -46,8 +59,17 @@ const SignUp = () => {
         navigate('/login');
       }
     } catch (error) {
-      
+      toast.error('Registration failed. Please try again.');
+      // Reset reCAPTCHA on error
+      setRecaptchaValue(null);
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
     }
+  };
+
+  const onRecaptchaChange = (value) => {
+    setRecaptchaValue(value);
   };
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -80,7 +102,22 @@ const SignUp = () => {
             <label className='self-start mb-1' htmlFor="contactNumber">Enter phone</label>
             <input value={signupDetails.contactNumber} onChange={(e) => {setSignupDetails({...signupDetails,contactNumber: e.target.value})}} className="signup-input-wide" type="text" name="contactNumber" id="contactNumber" placeholder="Phone number" />
           </div>
-          <button type='submit' className="bg-Blue hover:text-white self-center py-2 px-4 text-[15px] rounded-lg w-[100px] text-Gray mt-1">Sign Up</button>
+          
+          {/* reCAPTCHA */}
+          <div className="flex flex-col items-center">
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+              onChange={onRecaptchaChange}
+              theme="light"
+            />
+          </div>
+          
+          <button type='submit' disabled={!recaptchaValue} className={`self-center py-2 px-4 text-[15px] rounded-lg w-[100px] mt-1 ${
+            !recaptchaValue 
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+              : 'bg-Blue hover:text-white text-Gray'
+          }`}>Sign Up</button>
           <Link to='/login' className='self-center hover:underline'>Already have an account?</Link>
         </form>
       </div>

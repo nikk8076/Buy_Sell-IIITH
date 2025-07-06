@@ -25,17 +25,22 @@ const Chatbot = () => {
 
   const sendMessage = async () => {
     if (!inputMessage.trim()) return;
+
     const userMessage = {
       id: messages.length + 1,
       text: inputMessage,
       sender: 'user',
       timestamp: new Date()
     };
+
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsTyping(true);
+
     try {
-      const response = await axios.post('/chatbot', { message: inputMessage });
+      const response = await axios.post('/chatbot', { 
+        message: inputMessage
+      });
       
       const botMessage = {
         id: messages.length + 2,
