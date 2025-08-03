@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const router = express.Router();
-const { test, registerUser, loginUser, getDetails, EditDetails, Logout, fetchItems, getName, addToCart, getCart, deleteItem, addToOrders, getPendingOrders, checkOTP, getOrdersHistory, addReview, clearCart, chatbotResponse } = require('../controllers/authController');
+const { test, registerUser, loginUser, getDetails, EditDetails, Logout, fetchItems, getName, addToCart, getCart, deleteItem, addToOrders, getPendingOrders, checkOTP, getOrdersHistory, addReview, clearCart, chatbotResponse, addItem } = require('../controllers/authController');
 
 router.use(
     cors({
@@ -45,5 +45,7 @@ router.post('/addReview', addReview);
 router.post('/clearCart', clearCart);
 
 router.post('/chatbot', chatbotResponse);
+
+router.post('/addItem', addItem);
 
 module.exports = router;

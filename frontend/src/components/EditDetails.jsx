@@ -48,35 +48,90 @@ const EditDetails = () => {
         }
     };
     return (
-    <div>
-        <div className="flex justify-center items-center min-h-screen">
-        <div className="flex flex-col gap-3 p-4 border border-gray-300 rounded-lg shadow-lg">
-            <h1 className="text-[30px] text-Blue">Edit Details</h1>
-            <form onSubmit={handleEdit} className="mt-2 flex flex-col gap-2">
-            <div className="flex gap-2">
-                <div className="flex flex-col">
-                <label className='self-start mb-1' htmlFor="firstName">Enter firstname</label>
-                <input value={signupDetails.firstName} onChange={(e) => {setSignupDetails({...signupDetails,firstName: e.target.value})}} className="signup-input" type="text" name="firstName" id="firstName" placeholder="Firstname" />
+        <div className="page-container flex justify-center items-center">
+            <div className="form-container">
+                <div className="text-center mb-8">
+                    <h1 className="text-3xl font-bold text-neutral-800 mb-2">Edit Profile</h1>
+                    <p className="text-neutral-600">Update your account information</p>
                 </div>
-                <div className="flex flex-col">
-                <label className='self-start mb-1' htmlFor="lastName">Enter lastname</label>
-                <input value={signupDetails.lastName} onChange={(e) => {setSignupDetails({...signupDetails,lastName: e.target.value})}} className="signup-input" type="text" name="lastName" id="lastName" placeholder="Lastname" />
-                </div>
+                
+                <form onSubmit={handleEdit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className='form-label' htmlFor="firstName">First Name</label>
+                            <input 
+                                value={signupDetails.firstName} 
+                                onChange={(e) => {setSignupDetails({...signupDetails,firstName: e.target.value})}} 
+                                className="signup-input" 
+                                type="text" 
+                                name="firstName" 
+                                id="firstName" 
+                                placeholder="Enter first name"
+                                required 
+                            />
+                        </div>
+                        <div>
+                            <label className='form-label' htmlFor="lastName">Last Name</label>
+                            <input 
+                                value={signupDetails.lastName} 
+                                onChange={(e) => {setSignupDetails({...signupDetails,lastName: e.target.value})}} 
+                                className="signup-input" 
+                                type="text" 
+                                name="lastName" 
+                                id="lastName" 
+                                placeholder="Enter last name"
+                                required 
+                            />
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label className='form-label' htmlFor="email">Email Address</label>
+                        <input 
+                            value={signupDetails.email} 
+                            onChange={(e) => {setSignupDetails({...signupDetails,email: e.target.value})}} 
+                            className="signup-input-wide" 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            placeholder="Enter email address"
+                            required 
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className='form-label' htmlFor="contactNumber">Phone Number</label>
+                        <input 
+                            value={signupDetails.contactNumber} 
+                            onChange={(e) => {setSignupDetails({...signupDetails,contactNumber: e.target.value})}} 
+                            className="signup-input-wide" 
+                            type="tel" 
+                            name="contactNumber" 
+                            id="contactNumber" 
+                            placeholder="Enter phone number"
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                        <button type='submit' className="btn-primary">
+                            <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Save Changes
+                        </button>
+                        <button 
+                            type='button' 
+                            onClick={() => navigate('/dashboard')}
+                            className="btn-secondary"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div className="flex flex-col">
-                <label className='self-start mb-1' htmlFor="email">Enter email</label>
-                <input value={signupDetails.email} onChange={(e) => {setSignupDetails({...signupDetails,email: e.target.value})}} className="signup-input-wide" type="email" name="email" id="email" placeholder="Email" />
-            </div>
-            <div className="flex flex-col">
-                <label className='self-start mb-1' htmlFor="contactNumber">Enter phone</label>
-                <input value={signupDetails.contactNumber} onChange={(e) => {setSignupDetails({...signupDetails,contactNumber: e.target.value})}} className="signup-input-wide" type="text" name="contactNumber" id="contactNumber" placeholder="Phone number" />
-            </div>
-            <button type='submit' className="bg-Blue self-center py-2 px-4 text-[15px] rounded-lg w-[100px] text-Gray hover:text-white mt-1">Save</button>
-            </form>
         </div>
-        </div>
-    </div>
-  )
+    )
 }
 
 export default EditDetails

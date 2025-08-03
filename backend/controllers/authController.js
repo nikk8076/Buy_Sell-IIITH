@@ -651,6 +651,65 @@ const chatbotResponse = async (req, res) => {
   }
 };
 
+const addItem = async (req, res) => {
+  try {
+    const { name, price, description, category } = req.body;
+
+    // Extract seller_id from JWT token
+    const { token } = req.cookies;
+    if (!token) {
+      return res.json({ error: "Authentication required" });
+    }
+
+    let seller_id;
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      seller_id = decoded.id;
+    } catch (err) {
+      return res.json({ error: "Invalid token" });
+    }
+
+    console.log('Received data:', { name, price, description, category, seller_id });
+    // Validate required fields - check for empty strings too
+    if (!name || !price || !description || !category || 
+        name.trim() === '' || price.toString().trim() === '' || 
+        description.trim() === '' || category.trim() === '') {
+      console.log('Validation failed for required fields');
+      return res.json({ error: "All fields are required" });
+    }
+
+    // Validate price is a positive number
+    const numPrice = parseFloat(price);
+    if (isNaN(numPrice) || numPrice <= 0) {
+      console.log('Price validation failed:', price);
+      return res.json({ error: "Price must be a valid positive number" });
+    }
+
+    // Create new item
+    const newItem = new Item({
+      name: name.trim(),
+      price: numPrice.toFixed(2),
+      description: description.trim(),
+      category: category.trim(),
+      seller_id: new mongoose.Types.ObjectId(seller_id)
+    });
+
+    // Save item to database
+    const savedItem = await newItem.save();
+    console.log('Item saved successfully:', savedItem);
+    
+    res.json({ 
+      success: true, 
+      message: "Item added successfully", 
+      item: savedItem 
+    });
+
+  } catch (error) {
+    console.error("Error adding item:", error);
+    return res.json({ error: "Failed to add item. Please try again." });
+  }
+};
+
 module.exports = {
   test,
   registerUser,
@@ -670,4 +729,5 @@ module.exports = {
   addReview,
   clearCart,
   chatbotResponse,
+  addItem,
 };

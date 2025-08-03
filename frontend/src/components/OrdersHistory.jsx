@@ -46,157 +46,275 @@ const OrdersHistory = () => {
     }
   };
 
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      padding: '20px',
-      borderRadius: '10px',
-      width: '400px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    },
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-  };
-
   return (
-    <div className='mt-20 flex flex-col gap-5'>
-      <h1 className='text-2xl font-bold text-center'>Orders History</h1>
-      <div className='flex justify-center gap-5'>
-        <button
-          className={`bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white ${activeCategory === 'soldItems' ? 'bg-Blue-500 text-white' : 'bg-Gray text-gray-700 hover:text-black'}`}
-          onClick={() => setActiveCategory('soldItems')}
+    <div className='content-wrapper'>
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-neutral-800 mb-2">Orders History</h1>
+          <p className="text-neutral-600">Track your selling and buying activity</p>
+        </div>
+
+        {/* Category Tabs */}
+        <div className='flex justify-center mb-8'>
+          <div className="bg-neutral-100 rounded-lg p-1 flex space-x-1">
+            <button
+              className={`py-2 px-6 text-sm rounded-lg font-medium transition-all duration-200 ${
+                activeCategory === 'soldItems' 
+                  ? 'bg-white text-primary-600 shadow-sm' 
+                  : 'text-neutral-600 hover:text-neutral-800'
+              }`}
+              onClick={() => setActiveCategory('soldItems')}
+            >
+              <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              Items Sold ({soldItems.length})
+            </button>
+            <button
+              className={`py-2 px-6 text-sm rounded-lg font-medium transition-all duration-200 ${
+                activeCategory === 'pendingOrders' 
+                  ? 'bg-white text-primary-600 shadow-sm' 
+                  : 'text-neutral-600 hover:text-neutral-800'
+              }`}
+              onClick={() => setActiveCategory('pendingOrders')}
+            >
+              <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Pending Orders ({pendingOrders.length})
+            </button>
+            <button
+              className={`py-2 px-6 text-sm rounded-lg font-medium transition-all duration-200 ${
+                activeCategory === 'soldOrders' 
+                  ? 'bg-white text-primary-600 shadow-sm' 
+                  : 'text-neutral-600 hover:text-neutral-800'
+              }`}
+              onClick={() => setActiveCategory('soldOrders')}
+            >
+              <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              Sold Orders ({soldOrders.length})
+            </button>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="min-h-96">
+          {activeCategory === 'soldItems' && (
+            <div className='space-y-6'>
+              {soldItems.length === 0 ? (
+                <div className="text-center py-16">
+                  <svg className="w-16 h-16 mx-auto text-neutral-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  <h3 className="text-lg font-medium text-neutral-600 mb-2">No items sold yet</h3>
+                  <p className="text-neutral-500">Your sold items will appear here</p>
+                </div>
+              ) : (
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {soldItems.map((item, index) => (
+                    <div key={index} className='card hover:shadow-lg transition-all duration-200 border border-neutral-200'>
+                      <div className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-neutral-800 mb-1">{item.name}</h3>
+                            <p className="text-2xl font-bold text-primary-600">${item.price}</p>
+                          </div>
+                          <div className="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                            Sold
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center text-sm text-neutral-600">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            Buyer: {item.buyerName}
+                          </div>
+                        </div>
+                        
+                        <button
+                          className='btn-primary w-full text-sm'
+                          onClick={openModal}
+                        >
+                          Add Review
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeCategory === 'pendingOrders' && (
+            <div className='space-y-6'>
+              {pendingOrders.length === 0 ? (
+                <div className="text-center py-16">
+                  <svg className="w-16 h-16 mx-auto text-neutral-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <h3 className="text-lg font-medium text-neutral-600 mb-2">No pending orders</h3>
+                  <p className="text-neutral-500">Your pending orders will appear here</p>
+                </div>
+              ) : (
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {pendingOrders.map((order, index) => (
+                    <div key={index} className='card hover:shadow-lg transition-all duration-200 border border-neutral-200'>
+                      <div className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-neutral-800 mb-1">{order.itemName}</h3>
+                            <p className="text-2xl font-bold text-primary-600">${order.price}</p>
+                          </div>
+                          <div className="px-3 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-full">
+                            Pending
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center text-sm text-neutral-600">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            Seller: {order.sellerName}
+                          </div>
+                        </div>
+                        
+                        <button
+                          className='btn-primary w-full text-sm'
+                          onClick={openModal}
+                        >
+                          Add Review
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeCategory === 'soldOrders' && (
+            <div className='space-y-6'>
+              {soldOrders.length === 0 ? (
+                <div className="text-center py-16">
+                  <svg className="w-16 h-16 mx-auto text-neutral-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  <h3 className="text-lg font-medium text-neutral-600 mb-2">No sold orders</h3>
+                  <p className="text-neutral-500">Your completed orders will appear here</p>
+                </div>
+              ) : (
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {soldOrders.map((order, index) => (
+                    <div key={index} className='card hover:shadow-lg transition-all duration-200 border border-neutral-200'>
+                      <div className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-neutral-800 mb-1">{order.itemName}</h3>
+                            <p className="text-2xl font-bold text-primary-600">${order.price}</p>
+                          </div>
+                          <div className="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                            Completed
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center text-sm text-neutral-600">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            Seller: {order.sellerName}
+                          </div>
+                        </div>
+                        
+                        <button
+                          className='btn-primary w-full text-sm'
+                          onClick={openModal}
+                        >
+                          Add Review
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Review Modal */}
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Add Review"
+          style={{
+            content: {
+              top: '50%',
+              left: '50%',
+              right: 'auto',
+              bottom: 'auto',
+              marginRight: '-50%',
+              transform: 'translate(-50%, -50%)',
+              padding: '0',
+              borderRadius: '12px',
+              width: '500px',
+              maxWidth: '90vw',
+              border: 'none',
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            },
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backdropFilter: 'blur(4px)',
+            },
+          }}
         >
-          Items Sold
-        </button>
-        <button
-          className={`bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white ${activeCategory === 'pendingOrders' ? 'bg-Blue-500 text-white' : 'bg-Gray text-gray-700 hover:text-black'}`}
-          onClick={() => setActiveCategory('pendingOrders')}
-        >
-          Pending Orders
-        </button>
-        <button
-          className={`bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white ${activeCategory === 'soldOrders' ? 'bg-Blue-500 text-white' : 'bg-Gray text-gray-700 hover:text-black'}`}
-          onClick={() => setActiveCategory('soldOrders')}
-        >
-          Sold Orders
-        </button>
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className='text-xl font-semibold text-neutral-800'>Add Review</h2>
+              <button
+                onClick={closeModal}
+                className="p-1 hover:bg-neutral-100 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-neutral-700 mb-2">
+                Your Review
+              </label>
+              <textarea
+                className='w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none'
+                rows="4"
+                placeholder="Share your experience..."
+                value={reviewContent}
+                onChange={(e) => setReviewContent(e.target.value)}
+              />
+            </div>
+            
+            <div className='flex justify-end gap-3'>
+              <button
+                className='btn-secondary text-sm'
+                onClick={closeModal}
+              >
+                Cancel
+              </button>
+              <button
+                className='btn-primary text-sm'
+                onClick={handleReviewSubmit}
+              >
+                Submit Review
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
-
-      {activeCategory === 'soldItems' && (
-        <div className='section'>
-          <h2 className='text-xl font-semibold'>Items Sold</h2>
-          {soldItems.length === 0 ? (
-            <p className='text-center text-Black text-2xl mt-5'>No items sold.</p>
-          ) : (
-            <div className='items flex flex-row gap-10 flex-wrap px-4 py-2'>
-              {soldItems.map((item, index) => (
-                <div key={index} className='ml-3 flex flex-col shadow-md w-[400px] border border-gray-300 p-3 rounded-lg gap-5'>
-                  <div className='flex flex-col gap-2 self-center text-[15px] p-2'>
-                    <p><strong>Item: </strong>{item.name}</p>
-                    <p><strong>Price: </strong>$ {item.price}</p>
-                    <p><strong>Buyer: </strong>{item.buyerName}</p>
-                    <button
-                      className='bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white mt-2'
-                      onClick={openModal}
-                    >
-                      Add Review
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {activeCategory === 'pendingOrders' && (
-        <div className='section'>
-          <h2 className='text-xl font-semibold'>Pending Orders</h2>
-          {pendingOrders.length === 0 ? (
-            <p className='text-center text-Black text-2xl mt-5'>No pending orders.</p>
-          ) : (
-            <div className='items flex flex-row gap-10 flex-wrap px-4 py-2'>
-              {pendingOrders.map((order, index) => (
-                <div key={index} className='ml-3 flex flex-col shadow-md w-[400px] border border-gray-300 p-3 rounded-lg gap-5'>
-                  <div className='flex flex-col gap-2 self-center text-[15px] p-2'>
-                    <p><strong>Item: </strong>{order.itemName}</p>
-                    <p><strong>Price: </strong>$ {order.price}</p>
-                    <p><strong>Seller: </strong>{order.sellerName}</p>
-                    <button
-                      className='bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white mt-2'
-                      onClick={openModal}
-                    >
-                      Add Review
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {activeCategory === 'soldOrders' && (
-        <div className='section'>
-          <h2 className='text-xl font-semibold'>Sold Orders</h2>
-          {soldOrders.length === 0 ? (
-            <p className='text-center text-Black text-2xl mt-5'>No sold orders.</p>
-          ) : (
-            <div className='items flex flex-row gap-10 flex-wrap px-4 py-2'>
-              {soldOrders.map((order, index) => (
-                <div key={index} className='ml-3 flex flex-col shadow-md w-[400px] border border-gray-300 p-3 rounded-lg gap-5'>
-                  <div className='flex flex-col gap-2 self-center text-[15px] p-2'>
-                    <p><strong>Item: </strong>{order.itemName}</p>
-                    <p><strong>Price: </strong>$ {order.price}</p>
-                    <p><strong>Seller: </strong>{order.sellerName}</p>
-                    <button
-                      className='bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white mt-2'
-                      onClick={openModal}
-                    >
-                      Add Review
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Add Review"
-        style={customStyles}
-      >
-        <h2 className='text-xl font-semibold mb-4'>Add Review</h2>
-        <textarea
-          className='w-full p-2 border border-gray-300 rounded-lg'
-          rows="4"
-          value={reviewContent}
-          onChange={(e) => setReviewContent(e.target.value)}
-        />
-        <div className='flex justify-end gap-3 mt-4'>
-          <button
-            className='bg-Blue py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white'
-            onClick={closeModal}
-          >
-            Cancel
-          </button>
-          <button
-            className='bg-Blue py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white'
-            onClick={handleReviewSubmit}
-          >
-            Submit
-          </button>
-        </div>
-      </Modal>
     </div>
   );
 };

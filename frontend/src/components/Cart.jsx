@@ -51,22 +51,103 @@ const Cart = () => {
   };
 
   return (
-    <div className='mt-20 flex flex-col gap-5'>
-      {cart.length === 0 ? (
-        <p className='text-center text-Blue text-2xl'>Your cart is empty.</p>
-      ) : (
-        <>
-          <div className='items flex flex-row gap-10 flex-wrap px-4 py-2'>
-            {cart.map((cartItem, index) => (
-              <CartItem key={index} name={cartItem.name} id={cartItem.id} price={cartItem.price} onRemove={() => handleRemoveFromCart(index)} />
-            ))}
+    <div className='content-wrapper'>
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-neutral-800 mb-2">Shopping Cart</h1>
+          <p className="text-neutral-600">Review your items before checkout</p>
+        </div>
+
+        {cart.length === 0 ? (
+          <div className="card text-center py-16">
+            <div className="w-24 h-24 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-12 h-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m6 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-neutral-800 mb-2">Your cart is empty</h2>
+            <p className="text-neutral-600 mb-6">Start shopping to add items to your cart</p>
+            <Link to="/search" className="btn-primary inline-block">
+              Browse Items
+            </Link>
           </div>
-          <div className='flex justify-between items-center mt-4'>
-            <p className='text-xl font-semibold'>Total Price: $ {totalPrice}</p>
-            <button onClick={handleTransaction} className='bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white'>Buy items</button>
-          </div>
-        </>
-      )}
+        ) : (
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Cart Items */}
+              <div className="lg:col-span-2">
+                <div className="card">
+                  <h2 className="text-xl font-semibold text-neutral-800 mb-6">Items in Cart ({cart.length})</h2>
+                  <div className='space-y-4'>
+                    {cart.map((cartItem, index) => (
+                      <div key={index} className="transition-all duration-200 hover:scale-[1.01]">
+                        <CartItem 
+                          name={cartItem.name} 
+                          id={cartItem.id} 
+                          price={cartItem.price} 
+                          onRemove={() => handleRemoveFromCart(index)} 
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Summary */}
+              <div className="lg:col-span-1">
+                <div className="card sticky top-24">
+                  <h2 className="text-xl font-semibold text-neutral-800 mb-6">Order Summary</h2>
+                  
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between text-neutral-600">
+                      <span>Subtotal ({cart.length} items)</span>
+                      <span>${totalPrice}</span>
+                    </div>
+                    <div className="flex justify-between text-neutral-600">
+                      <span>Processing Fee</span>
+                      <span>Free</span>
+                    </div>
+                    <div className="border-t border-neutral-200 pt-4">
+                      <div className="flex justify-between text-lg font-semibold text-neutral-800">
+                        <span>Total</span>
+                        <span>${totalPrice}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={handleTransaction} 
+                    className='btn-primary w-full mb-4 relative overflow-hidden group'
+                  >
+                    <span className="relative z-10 flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      </svg>
+                      Proceed to Checkout
+                    </span>
+                  </button>
+                  
+                  <Link to="/search" className="btn-secondary w-full text-center">
+                    Continue Shopping
+                  </Link>
+
+                  <div className="mt-6 p-4 bg-primary-50 rounded-lg">
+                    <div className="flex items-start">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <div>
+                        <p className="text-sm font-medium text-primary-800">Secure Transaction</p>
+                        <p className="text-xs text-primary-600">Your payment information is protected and secure.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

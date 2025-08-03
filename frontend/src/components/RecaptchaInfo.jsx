@@ -25,7 +25,7 @@ const RecaptchaInfo = ({ onClose }) => {
         <div className="flex justify-end">
           <button
             onClick={onClose}
-            className="bg-Blue text-white px-4 py-2 rounded-lg hover:bg-opacity-90 text-sm"
+            className="btn-primary text-sm"
           >
             Got it
           </button>

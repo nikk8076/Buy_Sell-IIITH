@@ -48,7 +48,7 @@ const Item = () => {
       <p><strong>Seller: </strong>{(sellerDetails.firstName) || "Loading..."}</p>
       <p><strong>Seller contact: </strong>{sellerDetails.contactNumber || "Loading..."}</p>
       <p><strong>Seller email: </strong>{sellerDetails.contactEmail || "Loading..."}</p>
-      <button onClick={addToCart} className="bg-Blue self-center py-2 px-4 text-[15px] rounded-lg text-Gray hover:text-white mt-1">Add to cart</button>
+      <button onClick={addToCart} className="btn-primary">Add to cart</button>
     </div>
   )
 }

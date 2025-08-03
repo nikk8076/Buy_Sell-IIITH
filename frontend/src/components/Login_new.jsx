@@ -13,7 +13,6 @@ const Login = () => {
     password: '',
   })
   const [recaptchaValue, setRecaptchaValue] = React.useState(null);
-  const [showPassword, setShowPassword] = React.useState(false);
   const { user, setUser, loading } = useContext(myContext);
   const navigate = useNavigate();
   const recaptchaRef = useRef(null);
@@ -96,34 +95,16 @@ const Login = () => {
           
           <div>
             <label className="form-label" htmlFor="password">Password</label>
-            <div className="relative">
-              <input 
-                value={loginDetails.password} 
-                onChange={(e) => {setLoginDetails({...loginDetails,password: e.target.value})}} 
-                className="signup-input-wide pr-12" 
-                type={showPassword ? "text" : "password"} 
-                name="password" 
-                id="password" 
-                placeholder="Enter your password"
-                required 
-              />
-              <button
-                type="button"
-                className="absolute top-1/2 right-3 transform -translate-y-1/2 flex items-center justify-center w-6 h-6 text-neutral-500 hover:text-neutral-700 transition-colors"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                )}
-              </button>
-            </div>
+            <input 
+              value={loginDetails.password} 
+              onChange={(e) => {setLoginDetails({...loginDetails,password: e.target.value})}} 
+              className="signup-input-wide" 
+              type="password" 
+              name="password" 
+              id="password" 
+              placeholder="Enter your password"
+              required 
+            />
           </div>
           
           {/* reCAPTCHA */}
