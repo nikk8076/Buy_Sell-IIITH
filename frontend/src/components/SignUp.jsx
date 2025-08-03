@@ -73,21 +73,21 @@ const SignUp = () => {
     setRecaptchaValue(value);
   };
   return (
-    <div className="page-container flex justify-center items-center">
-      <div className="form-container">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-800 mb-2">Create Account</h1>
-          <p className="text-neutral-600">Join the IIITH Buy-Sell community</p>
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 flex justify-center items-center p-2 sm:p-4">
+      <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-card border border-neutral-200 w-full max-w-md sm:max-w-lg lg:max-w-xl">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-800 mb-2">Create Account</h1>
+          <p className="text-sm sm:text-base text-neutral-600">Join the IIITH Buy-Sell community</p>
         </div>
         
-        <form onSubmit={handleSignUp} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSignUp} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className='form-label' htmlFor="firstName">First Name</label>
               <input 
                 value={signupDetails.firstName} 
                 onChange={(e) => {setSignupDetails({...signupDetails,firstName: e.target.value})}} 
-                className="signup-input" 
+                className="signup-input w-full" 
                 type="text" 
                 name="firstName" 
                 id="firstName" 
@@ -100,7 +100,7 @@ const SignUp = () => {
               <input 
                 value={signupDetails.lastName} 
                 onChange={(e) => {setSignupDetails({...signupDetails,lastName: e.target.value})}} 
-                className="signup-input" 
+                className="signup-input w-full" 
                 type="text" 
                 name="lastName" 
                 id="lastName" 
@@ -156,13 +156,13 @@ const SignUp = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className='form-label' htmlFor="age">Age</label>
               <input 
                 value={signupDetails.age} 
                 onChange={(e) => {setSignupDetails({...signupDetails,age: e.target.value})}} 
-                className="signup-input" 
+                className="signup-input w-full" 
                 type="number" 
                 name="age" 
                 id="age" 
@@ -175,7 +175,7 @@ const SignUp = () => {
               <input 
                 value={signupDetails.contactNumber} 
                 onChange={(e) => {setSignupDetails({...signupDetails,contactNumber: e.target.value})}} 
-                className="signup-input" 
+                className="signup-input w-full" 
                 type="tel" 
                 name="contactNumber" 
                 id="contactNumber" 
@@ -187,12 +187,14 @@ const SignUp = () => {
           
           {/* reCAPTCHA */}
           <div className="flex justify-center">
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
-              onChange={onRecaptchaChange}
-              theme="light"
-            />
+            <div className="transform scale-75 sm:scale-90 md:scale-100">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+                onChange={onRecaptchaChange}
+                theme="light"
+              />
+            </div>
           </div>
           
           <button 
@@ -208,9 +210,9 @@ const SignUp = () => {
           </button>
           
           <div className="text-center pt-4 border-t border-neutral-200">
-            <p className="text-neutral-600">
+            <p className="text-sm sm:text-base text-neutral-600">
               Already have an account?{' '}
-              <Link to='/login' className='text-primary-600 hover:text-primary-700 font-medium transition-colors duration-200'>
+              <Link to='/login' className='text-primary-600 hover:text-primary-700 font-medium transition-colors duration-200 block sm:inline mt-1 sm:mt-0'>
                 Sign in here
               </Link>
             </p>

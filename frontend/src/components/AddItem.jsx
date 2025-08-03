@@ -81,18 +81,18 @@ const AddItem = () => {
   };
 
   return (
-    <div className="content-wrapper">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-800 mb-2">Add New Item</h1>
-          <p className="text-neutral-600">List your item for sale on the marketplace</p>
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 pt-16 pb-4 px-4 sm:px-6 lg:px-8">
+      <div className="w-full">
+        <div className="mb-2 sm:mb-4 text-center sm:text-left">
+          <h1 className="text-xl sm:text-2xl font-bold text-neutral-800 mb-2">Add New Item</h1>
+          <p className="text-sm text-neutral-600">List your item for sale on the marketplace</p>
         </div>
 
-        <div className="form-container">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-card border border-neutral-200">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             {/* Item Name */}
             <div>
-              <label className="form-label" htmlFor="name">
+              <label className="block text-sm font-medium text-neutral-700 mb-2" htmlFor="name">
                 Item Name *
               </label>
               <input
@@ -101,7 +101,7 @@ const AddItem = () => {
                 name="name"
                 value={itemDetails.name}
                 onChange={handleInputChange}
-                className="signup-input-wide"
+                className="w-full text-neutral-800 border border-neutral-300 mb-4 h-11 text-sm py-3 px-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 rounded-lg transition-all duration-200 bg-white shadow-sm hover:border-neutral-400"
                 placeholder="Enter item name"
                 required
               />
@@ -109,8 +109,8 @@ const AddItem = () => {
 
             {/* Price */}
             <div>
-              <label className="form-label" htmlFor="price">
-                Price ($) *
+              <label className="block text-sm font-medium text-neutral-700 mb-2" htmlFor="price">
+                Price (₹) *
               </label>
               <input
                 type="number"
@@ -118,7 +118,7 @@ const AddItem = () => {
                 name="price"
                 value={itemDetails.price}
                 onChange={handleInputChange}
-                className="signup-input-wide"
+                className="w-full text-neutral-800 border border-neutral-300 mb-4 h-11 text-sm py-3 px-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 rounded-lg transition-all duration-200 bg-white shadow-sm hover:border-neutral-400"
                 placeholder="Enter price"
                 min="0"
                 step="0.01"
@@ -128,7 +128,7 @@ const AddItem = () => {
 
             {/* Category */}
             <div>
-              <label className="form-label" htmlFor="category">
+              <label className="block text-sm font-medium text-neutral-700 mb-2" htmlFor="category">
                 Category *
               </label>
               <select
@@ -136,7 +136,7 @@ const AddItem = () => {
                 name="category"
                 value={itemDetails.category}
                 onChange={handleInputChange}
-                className="signup-input-wide"
+                className="w-full text-neutral-800 border border-neutral-300 mb-4 h-11 text-sm py-3 px-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 rounded-lg transition-all duration-200 bg-white shadow-sm hover:border-neutral-400"
                 required
               >
                 <option value="">Select a category</option>
@@ -150,7 +150,7 @@ const AddItem = () => {
 
             {/* Description */}
             <div>
-              <label className="form-label" htmlFor="description">
+              <label className="block text-sm font-medium text-neutral-700 mb-2" htmlFor="description">
                 Description *
               </label>
               <textarea
@@ -158,7 +158,7 @@ const AddItem = () => {
                 name="description"
                 value={itemDetails.description}
                 onChange={handleInputChange}
-                className="signup-input-wide resize-none"
+                className="w-full text-neutral-800 border border-neutral-300 mb-4 text-sm py-3 px-4 outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 rounded-lg transition-all duration-200 bg-white shadow-sm hover:border-neutral-400 resize-none"
                 placeholder="Describe your item..."
                 rows="4"
                 required
@@ -166,18 +166,18 @@ const AddItem = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
               <button
                 type="button"
                 onClick={() => navigate('/dashboard')}
-                className="btn-secondary flex-1"
+                className="btn-secondary flex-1 order-2 sm:order-1"
                 disabled={isLoading}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn-primary flex-1"
+                className="btn-primary flex-1 order-1 sm:order-2"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -197,29 +197,29 @@ const AddItem = () => {
         </div>
 
         {/* Tips Section */}
-        <div className="mt-8 p-6 bg-neutral-50 rounded-lg">
-          <h3 className="font-semibold text-neutral-800 mb-3">Tips for a great listing:</h3>
-          <ul className="space-y-2 text-sm text-neutral-600">
+        <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-white rounded-xl shadow-card border border-neutral-200">
+          <h3 className="font-semibold text-neutral-800 mb-3 text-sm sm:text-base">Tips for a great listing:</h3>
+          <ul className="space-y-2 text-xs sm:text-sm text-neutral-600">
             <li className="flex items-start">
-              <svg className="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Use a clear and descriptive title
             </li>
             <li className="flex items-start">
-              <svg className="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Set a competitive and fair price
             </li>
             <li className="flex items-start">
-              <svg className="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Write a detailed description including condition
             </li>
             <li className="flex items-start">
-              <svg className="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Choose the most relevant category

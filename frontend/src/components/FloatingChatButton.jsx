@@ -7,11 +7,11 @@ const FloatingChatButton = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
       <Link to="/chatbot">
-        <div className="bg-Blue hover:bg-opacity-90 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
+        <div className="bg-Blue hover:bg-opacity-90 text-white p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5 sm:w-6 sm:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -26,12 +26,6 @@ const FloatingChatButton = () => {
           </svg>
         </div>
       </Link>
-      <button
-        onClick={() => setIsVisible(false)}
-        className="absolute -top-2 -right-2 bg-Red text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-opacity-80"
-      >
-        ×
-      </button>
     </div>
   );
 };

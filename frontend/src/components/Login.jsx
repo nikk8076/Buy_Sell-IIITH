@@ -72,11 +72,11 @@ const Login = () => {
   };
   
   return (
-    <div className="page-container flex justify-center items-center">
-      <div className="form-container">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-neutral-800 mb-2">Welcome Back</h1>
-          <p className="text-neutral-600">Sign in to your account to continue</p>
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 flex justify-center items-center p-2 sm:p-4">
+      <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-card border border-neutral-200 w-full max-w-sm sm:max-w-md lg:max-w-lg">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-800 mb-2">Welcome Back</h1>
+          <p className="text-sm sm:text-base text-neutral-600">Sign in to your account to continue</p>
         </div>
         
         <form onSubmit={handleLogin} className="space-y-6">
@@ -128,12 +128,14 @@ const Login = () => {
           
           {/* reCAPTCHA */}
           <div className="flex justify-center">
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
-              onChange={onRecaptchaChange}
-              theme="light"
-            />
+            <div className="transform scale-90 sm:scale-100">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+                onChange={onRecaptchaChange}
+                theme="light"
+              />
+            </div>
           </div>
           
           <button 
@@ -149,9 +151,9 @@ const Login = () => {
           </button>
           
           <div className="text-center pt-4 border-t border-neutral-200">
-            <p className="text-neutral-600">
+            <p className="text-sm sm:text-base text-neutral-600">
               Don't have an account?{' '}
-              <Link to='/signup' className='text-primary-600 hover:text-primary-700 font-medium transition-colors duration-200'>
+              <Link to='/signup' className='text-primary-600 hover:text-primary-700 font-medium transition-colors duration-200 block sm:inline mt-1 sm:mt-0'>
                 Create one here
               </Link>
             </p>
